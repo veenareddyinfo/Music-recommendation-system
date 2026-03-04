@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Recommendation System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #181818; 
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background-color: #212121; 
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #ff0000; 
+        }
+
+        label {
+            font-size: 16px;
+            color: #b3b3b3;
+        }
+
+        input[type="text"] {
+            background: #333333;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input::placeholder {
+            color: #b3b3b3;
+        }
+
+        .btn-primary {
+            background-color: #ff0000; 
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #e60000; 
+        }
+
+        .recommendations ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .recommendations li {
+            background-color: #333333; 
+            border: 1px solid #ff0000;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .recommendations li:hover {
+            transform: scale(1.02);
+        }
+
+        .song-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            margin-right: 15px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+        .song-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .song-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff0000; 
+        }
+
+        .song-duration {
+            font-size: 14px;
+            color: #b3b3b3; 
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Music Recommendation System 🎶</h1>
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="song_name">Enter a Song Name:</label>
+                <input type="text" id="song_name" name="song_name" class="form-control" placeholder="Type a song name..." required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Get Recommendations</button>
+        </form>
+        
+        {% if recommendations %}
+        <div class="recommendations mt-4">
+            <h2 class="text-center mb-3">Recommended Songs:</h2>
+            <ul>
+                {% for song in recommendations %}
+                <li>
+                    <a href="{{ song.spotify_url }}" target="_blank" class="d-flex align-items-center">
+                        <div class="song-image">
+                            <img src="{{ song.image }}" alt="{{ song.name }}">
+                        </div>
+                        <div>
+                            <span class="song-title">{{ song.name }}</span><br>
+                            <span class="song-duration">{{ song.duration }}</span>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
